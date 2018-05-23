@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/sortByName"
+        app:showAsAction="collapseActionView|withText"
+        android:title="Sort by name"/>
+
+    <item android:id="@+id/sortByFacility"
+        app:showAsAction="collapseActionView|withText"
+        android:title="Sort by facility"/>
+
+    <item android:id="@+id/sortByInmateId"
+        app:showAsAction="collapseActionView|withText"
+        android:title="Sort by Id"/>
+
+
+</menu>

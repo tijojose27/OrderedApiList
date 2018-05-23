@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OrderedApiList</string>
+    <string name="INMATE_DETAILS">INMATE DETAILS</string>
+    <string name="apprecite_label">I appreciate the time you took to interview me</string>
+    <string name="salutation_label">Hey Bryan</string>
+    <string name="list_label">Here is the list</string>
+</resources>
