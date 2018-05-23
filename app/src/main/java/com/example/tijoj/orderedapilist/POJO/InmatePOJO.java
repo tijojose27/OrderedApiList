@@ -7,14 +7,15 @@ import java.util.Comparator;
 
 /**
  * Created by tijoj on 5/23/2018.
+ * BASIC POJO OBJECT
  */
 
 public class InmatePOJO implements Parcelable{
 
-    public int facility_id;
-    public String first_name;
-    public String last_name;
-    public int inmate_id;
+    private int facility_id;
+    private String first_name;
+    private String last_name;
+    private int inmate_id;
 
     public InmatePOJO(int facility_id, String first_name, String last_name, int inmate_id) {
         this.facility_id = facility_id;
@@ -30,6 +31,27 @@ public class InmatePOJO implements Parcelable{
         inmate_id = in.readInt();
     }
 
+
+    //GETTERS FOR POJO
+    public int getFacility_id() {
+        return facility_id;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public int getInmate_id() {
+        return inmate_id;
+    }
+    //END
+
+
+    //IMPLEMENTING PARCELABLE
     public static final Creator<InmatePOJO> CREATOR = new Creator<InmatePOJO>() {
         @Override
         public InmatePOJO createFromParcel(Parcel in) {
@@ -42,38 +64,22 @@ public class InmatePOJO implements Parcelable{
         }
     };
 
-    public int getFacility_id() {
-        return facility_id;
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setFacility_id(int facility_id) {
-        this.facility_id = facility_id;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(facility_id);
+        dest.writeString(first_name);
+        dest.writeString(last_name);
+        dest.writeInt(inmate_id);
     }
+    // END
 
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public int getInmate_id() {
-        return inmate_id;
-    }
-
-    public void setInmate_id(int inmate_id) {
-        this.inmate_id = inmate_id;
-    }
-
+    // IMPLEMENTING CUSTOM COMPARATOR SO WE CAN COMPARE THE INMATE OBJECTS
     public static Comparator<InmatePOJO> byInmateId = new Comparator<InmatePOJO>() {
         @Override
         public int compare(InmatePOJO o1, InmatePOJO o2) {
@@ -101,18 +107,6 @@ public class InmatePOJO implements Parcelable{
             return facility1-facility2;
         }
     };
+    //END
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(facility_id);
-        dest.writeString(first_name);
-        dest.writeString(last_name);
-        dest.writeInt(inmate_id);
-    }
 }

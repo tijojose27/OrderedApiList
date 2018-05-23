@@ -4,17 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.tijoj.orderedapilist.POJO.InmatePOJO;
-import com.example.tijoj.orderedapilist.POJOHelpers.POJOHelper;
-
-import org.apache.http.conn.scheme.HostNameResolver;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,24 +32,27 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<InmatePOJO> inmateDetailsArray;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //GETTING ID
         firstTV = findViewById(R.id.first_intro_text_view_main);
         secondTV = findViewById(R.id.second_intro_text_view_main);
         thirdTV = findViewById(R.id.third_intro_text_view_main);
 
+        //TODO REPLACE THE STRING VALUE WITH THE URL
         final String url=getString(R.string.URL);
 
+        //SETTING THE OPCAITY TO MAKE THE TEXTVIEW INVISIBLES
         secondTV.setAlpha(0f);
         thirdTV.setAlpha(0f);
 
+        //GETTING THE DATA FROM REST API ON BACKGROUND
         getInmateDetails(url);
 
+        //STARTING FIRST ANIMATION - DISTRACTION
         Handler handler = new Handler();
 
         handler.postDelayed(new Runnable() {
@@ -73,27 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }, 1500);
     }
 
-    private void getInmateDetails(String url) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String result= response.body().string();
-                inmateDetailsArray = getInmateFromPojo(result);
-            }
-        });
-    }
-
-
+    //SECOND TEXTVIEW ANIMATION
     public void secondTVAnimatiion() {
         secondTV.animate()
                 .alpha(1f)
@@ -116,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }, 1500);
     }
 
+    //THIRD TEXTVIEW ANIMATION AND AFTER ANIMATION IS DONT CALL THE NEXT ACTIVITY
     public void thirdTVAnimation(){
         thirdTV.animate()
                 .alpha(1f)
@@ -136,4 +116,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    // FETCHING DATA FROM API AND CONVERTING IT O POJO
+    private void getInmateDetails(String url) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result= response.body().string();
+                inmateDetailsArray = getInmateFromPojo(result);
+            }
+        });
+    }
+
 }

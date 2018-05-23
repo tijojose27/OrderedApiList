@@ -35,30 +35,34 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        //SETTUG TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
 
+        //GETTING THE VIEWS
         coordinatorLayout = findViewById(R.id.coordinator);
-
         recyclerView = findViewById(R.id.recyclerView);
-
+        //SETTING SIZE OF RECYCLERVIEW
         recyclerView.setHasFixedSize(true);
 
+        //CHECKING FOR SAVED INSTANCE STATE AND GETTING DATA FROM THE MAIN ACITIVITY
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             inmateDetails = extras.getParcelableArrayList(getString(R.string.INMATE_DETAILS));
         }if(savedInstanceState!=null){
             inmateDetails = savedInstanceState.getParcelableArrayList(getString(R.string.INMATE_DETAILS));
-        }if(inmateDetails ==null){
+        }
+        //IF THERE IS NO DATA SHOW CUSTOM SCREEN
+        if(inmateDetails ==null){
             setContentView(R.layout.no_list);
         }
 
-
+        // UPDATING RECYCLERVIEW IF AVAIABLE
         updateRecyclerView(inmateDetails);
 
     }
 
+    //UPDATE RECYCLER VIEW
     private void updateRecyclerView(ArrayList<InmatePOJO> inmateDetails) {
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -68,6 +72,7 @@ public class ListActivity extends AppCompatActivity {
         runLayoutAnimation(recyclerView);
     }
 
+    // ANIMATION ON RECYCLERVIEW
     private void runLayoutAnimation(RecyclerView recyclerView) {
         Context context = recyclerView.getContext();
         LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_drop_down);
@@ -77,12 +82,14 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+    //GETTINT THE MENU ITEM
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_list, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //GETTING WHAT WAS CLICKED FROM THE TOOLBAR
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -107,6 +114,7 @@ public class ListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //IF DEVICE IS ROTATED
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

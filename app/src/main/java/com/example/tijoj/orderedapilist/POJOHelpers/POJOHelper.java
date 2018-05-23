@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class POJOHelper {
 
-
+    //CONVERT THE JSON TO POJO
     public static ArrayList<InmatePOJO> getInmateFromPojo(String json){
          ArrayList<InmatePOJO> inmatePOJOArrayList =new ArrayList<>();
         try {
@@ -34,5 +34,6 @@ public class POJOHelper {
         }
         return inmatePOJOArrayList;
     }
+    //END
 
 }
